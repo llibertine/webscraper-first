@@ -9,16 +9,26 @@ from bs4 import BeautifulSoup
 
 # function
 def simple_get(url):
-    """
+   
+"""
     Attempts to get the content at `url` by making an HTTP GET request.
     If the content-type of response is some kind of HTML/XML, return the
     text content, otherwise return None.
     Function accepts a single url argument.
     
-    The simple_get() function accepts a single url argument. It then makes a GET request to that URL. If nothing goes wrong, you end up with the raw HTML content for the page you requested. If there were any problems with your request (like the URL is bad, or the remote server is down), then your function returns None.
+    The simple_get() function accepts a single url argument. 
+    It then makes a GET request to that URL. If nothing goes wrong, 
+    you end up with the raw HTML content for the page you requested. 
+    If there were any problems with your request (like the URL is bad, 
+    or the remote server is down), then your function returns None.
 
-    You may have noticed the use of the closing() function in your definition of simple_get(). The closing() function ensures that any network resources are freed when they go out of scope in that with block. Using closing() like that is good practice and helps to prevent fatal errors and network timeouts.
+    You may have noticed the use of the closing() function 
+    in your definition of simple_get(). The closing() function ensures 
+    that any network resources are freed when they go out of 
+    scope in that with block. Using closing() like that is good practice 
+    and helps to prevent fatal errors and network timeouts.
     """
+
     try:
         with closing(get(url, stream=True)) as resp:
             if is_good_response(resp):
@@ -47,7 +57,8 @@ def log_error(e):
     """
     print(e)
 
-"""For example, when i have received a HTML named "contrived.html", read it in and parse it. For example HTML e.g.:
+"""For example, when I now have received a HTML named "contrived.html", 
+read it in and parse it. For example HTML e.g.:
 
 <!DOCTYPE html>
 <html>
@@ -71,7 +82,8 @@ for p in html.select('p'):
 
 """Breaking down the example, you first parse the raw HTML by passing it to 
 the BeautifulSoup constructor. BeautifulSoup accepts multiple back-end parsers, 
-but the standard back-end is 'html.parser', which you supply here as the second argument. 
+but the standard back-end is 'html.parser', which you 
+supply here as the second argument. 
 (If you neglect to supply that 'html.parser', then the code will still work, 
 but you will see a warning print to your screen.)
 
