@@ -1,13 +1,13 @@
-#requests und bs4 installieren
+# install requests & bs4 via pip
 pip install requests BeautifulSoup4
 
-#requests für http requests, 
+# requests for http requests
 from requests import get
 from requests.exceptions import RequestException
 from contextlib import closing
 from bs4 import BeautifulSoup
 
-#function
+# function
 def simple_get(url):
     """
     Attempts to get the content at `url` by making an HTTP GET request.
@@ -22,13 +22,13 @@ def simple_get(url):
     try:
         with closing(get(url, stream=True)) as resp:
             if is_good_response(resp):
-                return resp.content #gibt das reine html zurück
+                return resp.content # returns pure html
             else:
                 return None
 
     except RequestException as e:
         log_error('Error during requests to {0} : {1}'.format(url, str(e)))
-        return None #returned nix wenn was mit url nicht passt
+        return None # returnes nothing if somethings wrong with url
 
 def is_good_response(resp):
     """
@@ -47,7 +47,7 @@ def log_error(e):
     """
     print(e)
 
-"""Wenn ich jetzt ein html mit namen contrived erhalten habe z.B., dann lese ich es ein und parse es. Für gegebenes HTML z.B.:
+"""For example, when i have received a HTML named "contrived.html", read it in and parse it. For example HTML e.g.:
 
 <!DOCTYPE html>
 <html>
@@ -60,12 +60,24 @@ def log_error(e):
 </body>
 </html>
 """
+
 raw_html = open('contrived.html').read()
 html = BeautifulSoup(raw_html, 'html.parser')
-for p in html.select('p'): #html.select('p') returns a list of paragraph elements
-     if p['id'] == 'walrus': #id selected
-         print(p.text) #I am the walrus wird geprintet
 
-"""Breaking down the example, you first parse the raw HTML by passing it to the BeautifulSoup constructor. BeautifulSoup accepts multiple back-end parsers, but the standard back-end is 'html.parser', which you supply here as the second argument. (If you neglect to supply that 'html.parser', then the code will still work, but you will see a warning print to your screen.)
+# html.select('p') returns a list of paragraph elements
+for p in html.select('p'):
+     if p['id'] == 'walrus': # id selected
+         print(p.text) # "I am the walrus is printed"
 
-The select() method on your html object lets you use CSS selectors to locate elements in the document. In the above case, html.select('p') returns a list of paragraph elements. Each p has HTML attributes that you can access like a dict. In the line if p['id'] == 'walrus', for example, you check if the id attribute is equal to the string 'walrus', which corresponds to <p id="walrus"> in the HTML."""
+"""Breaking down the example, you first parse the raw HTML by passing it to 
+the BeautifulSoup constructor. BeautifulSoup accepts multiple back-end parsers, 
+but the standard back-end is 'html.parser', which you supply here as the second argument. 
+(If you neglect to supply that 'html.parser', then the code will still work, 
+but you will see a warning print to your screen.)
+
+The select() method on your html object lets you use CSS selectors to 
+locate elements in the document. In the above case, html.select('p') returns 
+a list of paragraph elements. Each p has HTML attributes that you 
+can access like a dict. In the line if p['id'] == 'walrus', for example, 
+you check if the id attribute is equal to the string 'walrus', 
+which corresponds to <p id="walrus"> in the HTML."""
